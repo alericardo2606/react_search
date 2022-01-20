@@ -1,0 +1,114 @@
+#ib-autocomplete-add {
+  width: 100%;
+  position: relative;
+}
+
+#ib-autocomplete-add .ui-autocomplete {
+  width: 100% !important;
+}
+
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ib-fhpa-minisearch .ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ui-autocomplete .ui-menu-item {
+  width: 100% !important;
+  min-height: 40px !important;
+}
+
+.ui-autocomplete .ui-menu-item .ui-menu-item-wrapper {
+  font-size: 0.8125rem;
+  font-family: "Open Sans", sans-serif;
+  width: 100% !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  padding: 0 1rem;
+  min-height: 45px;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.ui-autocomplete .ui-menu-item .ui-menu-item-wrapper {
+  font-size: 0.875rem;
+  min-height: 40px;
+}
+
+.autocomplete-item-type {
+  font-weight: 600;
+  color: #c1c1c1;
+  position: absolute;
+  right: 0;
+  top: 3px !important;
+  display: inline-block;
+  padding: 0 10px !important;
+  line-height: normal !important;
+  text-transform: capitalize;
+  width: auto;
+  right: 0 !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 0;
+  font-size: 10px;
+  height: auto !important;
+}
+
+.autocomplete-item-type {
+  font-weight: 600 !important;
+}
+
+.autocomplete-item-type {
+  top: 0 !important;
+  padding: 0 15px !important;
+  height: 100% !important;
+  font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.ui-autocomplete .ui-menu-item .ui-menu-item-wrapper.ui-state-active, .ui-autocomplete .ui-menu-item .ui-menu-item-wrapper:hover {
+  border: 0;
+  border-bottom: #333 !important;
+  background-color: #333;
+  color: #FFF;
+  margin: 0;
+}
+
+.ui-autocomplete::-webkit-scrollbar {
+  width: 10px;
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb {
+  background-color: #333;
+}
+
+.ui-autocomplete::-webkit-scrollbar-track {
+  border: 0px solid black;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+input:focus-visible {
+  outline: none;
+}
