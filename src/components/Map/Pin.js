@@ -1,6 +1,7 @@
 import React from 'react';
 import MarkerInfoBox from './MarkerInfoBox';
 import MarkerInfoBoxMulti from './MarkerInfoBoxMulti';
+import {abbreviateNumber} from "../../utils/util";
 
 const pinStyle = {
     containerActive: {
@@ -35,7 +36,7 @@ const Pin = ({ setActive, active, group }) => {
                 )
                 : (
                     <div onClick={(e) => setActive(group[0].mls_num)} className={`dgt-richmarker-single ${currentActive ? 'ib-search-marker-active' : ''}`}>
-                        <strong>{group[0].abbreviatedPrice}</strong>
+                        <strong>{abbreviateNumber(group[0].price)}</strong>
                     </div>
                 )}
 

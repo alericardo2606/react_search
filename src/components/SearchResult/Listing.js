@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import {numberWithCommas} from "../../utils/util";
 
 const Carousel = ({ images, address }) => {
     const [isArray, setIsArray] = useState(images.length > 0);
@@ -43,7 +44,7 @@ const Carousel = ({ images, address }) => {
 
 export default ({ info, setActive }) => {
     const {
-        formattedSqft, formattedPrice, bed, bath, baths_half, full_address, gallery, mls_num, status, recently_listed,
+        formattedSqft, price, sqft, bed, bath, baths_half, full_address, gallery, mls_num, status, recently_listed,
     } = info;
     const [hovered, setHovered] = useState(false);
 
@@ -71,7 +72,7 @@ export default ({ info, setActive }) => {
             <ul className="property-info">
                 <li className="property-info-item property-price">
                     $
-                    {formattedPrice}
+                    {numberWithCommas(price)}
                 </li>
                 <li className="property-info-item property-beds">
                     {bed}
@@ -84,7 +85,7 @@ export default ({ info, setActive }) => {
                     Bath(s)
                 </li>
                 <li className="property-info-item property-sqft">
-                    {formattedSqft}
+                    {numberWithCommas(sqft)}
                     {' '}
                     Sq.Ft.
                 </li>

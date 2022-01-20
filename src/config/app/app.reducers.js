@@ -43,51 +43,59 @@ const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case REQUEST(ACTION_TYPE.BOOST_SEARCH):
             return {...state, waiting: true, searching: 'Searching...'}
+
         case SUCCESS(ACTION_TYPE.BOOST_SEARCH):
             return action.payload
 
         case REQUEST(ACTION_TYPE.BOOST_SEARCH_FILTER):
             return {...state, waiting: true}
+
         case SUCCESS(ACTION_TYPE.BOOST_SEARCH_FILTER):
             return action.payload
 
-        case ACTION_TYPE.SET_BOOST_SEARCH_DATA:
+        case ACTION_TYPE.BOOST_SEARCH_FILTER: {
             return action.payload
+        }
+
+        case ACTION_TYPE.SET_BOOST_SEARCH_DATA: {
+            return action.payload
+        }
 
         default:
             return state
     }
 }
 
-
 export const getFilterParams = (filter_id) => async (dispatch, getState) => {
     let currentState = getState();
     let search_data = [];
     let params = '';
-    await dispatch({
+
+    const resSearchFilter = await axios.get(API_SEARCH_FILTER + '/' + filter_id);
+
+    currentState = { ...resSearchFilter.data, search_data: [] };
+
+    Object.keys(currentState).forEach((item) => {
+        if (item !== 'search_data' && item !== 'gmap_coords_zoom' && item !== 'created_at' && item !== 'modified_in' && item !== 'polygon_search' && item !== 'name' && item !== 'token_id' && item !== 'default_view' && item !== 'count' && item !== 'sort_type' && item !== 'page' && item !== 'id_hackbox' && item !== 'amenities') {
+            if (currentState[item] !== null) {
+                params += `%26${item}%3D${currentState[item]}`;
+            } else {
+                params += `%26${item}%3D${currentState[item] !== null ? currentState[item] : ''}`;
+            }
+        }
+    });
+
+    const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.polygon_search}&event_triggered=yes&device_width=${window.innerWidth}`;
+    const resSearchUrl = await axios.post(API_SEARCH_URL, body);
+
+    currentState.search_data = resSearchUrl.data;
+    currentState.waiting = false;
+
+    // return currentState;
+    // debugger
+    dispatch({
         type: ACTION_TYPE.BOOST_SEARCH_FILTER,
-        payload: axios
-            .get(API_SEARCH_FILTER + '/' + filter_id)
-            .then((response) => {
-                currentState = {...response.data, search_data: []};
-                Object.keys(currentState)
-                    .forEach((item) => {
-                        if (item !== 'search_data' && item !== 'gmap_coords_zoom' && item !== 'created_at' && item !== 'modified_in' && item !== 'polygon_search' && item !== 'name' && item !== 'token_id' && item !== 'default_view' && item !== 'count' && item !== 'sort_type' && item !== 'page' && item !== 'id_hackbox' && item !== 'amenities') {
-                            if (currentState[item] !== null) {
-                                params += `%26${item}%3D${currentState[item]}`;
-                            } else {
-                                params += `%26${item}%3D${currentState[item] !== null ? currentState[item] : ''}`;
-                            }
-                        }
-                    });
-                const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.polygon_search}&event_triggered=yes&device_width=${window.innerWidth}`;
-                axios
-                    .post(API_SEARCH_URL, body)
-                    .then((response) => {
-                        currentState.search_data = response.data
-                    })
-                return currentState;
-            })
+        payload: currentState,
     })
     // await dispatch(setData(search_data))
 }

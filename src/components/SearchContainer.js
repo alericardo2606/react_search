@@ -1,13 +1,12 @@
 import SearchFilter from "./SearchFilter/SearchFilter";
 import SearchMap from "./Map/SearchMap";
-import ResultContainer from "./SearchResult/ResultContainer";
-import {useCallback, useEffect, useState} from "react";
-import {getFilterParams as getFilterParamsAction, getSearchData} from "../config/app/app.reducers";
-import {connect} from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { getFilterParams as getFilterParamsAction, getSearchData } from "../config/app/app.reducers";
+import { connect } from "react-redux";
 import '../App.css';
+import ResultContainer from "./SearchResult/ResultContainer";
 
 const SearchContainer = (props) => {
-
     const {
         templateData,
         filterId,
@@ -15,17 +14,17 @@ const SearchContainer = (props) => {
         getFilterParams
     } = props;
 
-    console.log(props)
+    // console.log(data)
     // STATES MAPS
     const [updating, setUpdating] = useState(false);
     const [active, setActive] = useState(undefined);
     const [page, setPage] = useState(1);
     const [shape, setShape] = useState('');
     const [sortType, setSortType] = useState(templateData.sort_type);
-    const [initial, setInitial] = useState(templateData.search_data);
+    const [initial, setInitial] = useState(templateData);
 
 
-    console.log(initial)
+    // console.log(initial)
 
     useEffect(() => {
         setUpdating(false);
@@ -38,11 +37,12 @@ const SearchContainer = (props) => {
 
     useEffect(() => {
         getFilterParams(filterId)
-    }, [getFilterParams]);
+
+    }, []);
 
     const handleChangeItem = useCallback((newValue, type) => {
-        console.log(newValue);
-        console.log(type);
+        // console.log(newValue);
+        // console.log(type);
     });
 
     return (
@@ -70,7 +70,7 @@ const SearchContainer = (props) => {
                     setSortType={setSortType}
                     setActive={setActive}
                     setShape={setShape}
-                    data={initial}
+                    data={templateData}
                     page={page}
                     setPage={setPage}
                 />
@@ -79,15 +79,12 @@ const SearchContainer = (props) => {
     );
 }
 
-const mapStateToProps = (state) => {
-    console.log(state.boostData)
-    return {
-        templateData: state.boostData.search_data
-    }
-};
+const mapStateToProps = (state) => ({
+    templateData: state.boostData.search_data,
+});
 
 const mapDispatchToProps = {
-    getFilterParams: getFilterParamsAction
+    getFilterParams: getFilterParamsAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);

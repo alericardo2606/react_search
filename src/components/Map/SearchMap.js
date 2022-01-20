@@ -59,6 +59,8 @@ const createMapOptions = (maps) => ({
     },
 });
 
+
+
 export default function SearchMap({
                                       data,
                                       active,
@@ -263,16 +265,16 @@ export default function SearchMap({
     // Iterate myPlaces to size, center, and zoom map to contain all markers
     const fitBounds = (map, maps) => {
         const bounds = new window.google.maps.LatLngBounds();
-        // if (data.map_items.length > 0) {
-        //   data.map_items.map((place) => {
-        //     bounds.extend(new window.google.maps.LatLng(
-        //       place.lat,
-        //       place.lng,
-        //     ));
-        //     return place;
-        //   });
-        //   map.fitBounds(bounds);
-        // }
+        if (data.map_items.length > 0) {
+            data.map_items.map((place) => {
+            bounds.extend(new window.google.maps.LatLng(
+              place.lat,
+              place.lng,
+            ));
+            return place;
+          });
+          map.fitBounds(bounds);
+        }
     };
 
     // Re-center map when resizing the window
@@ -294,7 +296,7 @@ export default function SearchMap({
 
         map.fitBounds(bounds);
 
-        // bindResizeListener(map, maps, bounds);
+        bindResizeListener(map, maps, bounds);
 
         // let encodedPath = initialPolygon;
         //
@@ -309,8 +311,8 @@ export default function SearchMap({
         //
         // createPolygon(maps.geometry.encoding.decodePath(atob(encodedPath)), map, maps);
         // console.log(initialPolygon);
-        // setup draw button
 
+        // setup draw button
         const mapDrawButton = document.createElement('div');
         mapDrawButton.id = 'flex-map-draw';
         document.getElementsByClassName('gm-style')[0].appendChild(mapDrawButton);
@@ -371,21 +373,21 @@ export default function SearchMap({
                 height: '100%',
             }}
             >
-                {/*<GoogleMapReact*/}
-                {/*    bootstrapURLKeys={{*/}
-                {/*        key: 'AIzaSyBdlczEuxYRH-xlD_EZH4jv0naeVT1JaA4',*/}
-                {/*        language: 'en',*/}
-                {/*        region: 'us',*/}
-                {/*        libraries: ['drawing', 'geometry'].join(','),*/}
-                {/*    }}*/}
-                {/*    defaultZoom={defaultProps.zoom}*/}
-                {/*    defaultCenter={defaultProps.center}*/}
-                {/*    yesIWantToUseGoogleMapApiInternals*/}
-                {/*    options={createMapOptions}*/}
-                {/*    onGoogleApiLoaded={onGoogleApiLoaded}*/}
-                {/*>*/}
-                {/*    {pins}*/}
-                {/*</GoogleMapReact>*/}
+                <GoogleMapReact
+                    bootstrapURLKeys={{
+                        key: 'AIzaSyBdlczEuxYRH-xlD_EZH4jv0naeVT1JaA4',
+                        language: 'en',
+                        region: 'us',
+                        libraries: ['drawing', 'geometry'].join(','),
+                    }}
+                    defaultZoom={defaultProps.zoom}
+                    defaultCenter={defaultProps.center}
+                    yesIWantToUseGoogleMapApiInternals
+                    options={createMapOptions}
+                    // onGoogleApiLoaded={onGoogleApiLoaded}
+                >
+                    {pins}
+                </GoogleMapReact>
             </div>
         </div>
     );

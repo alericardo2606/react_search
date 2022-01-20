@@ -12,7 +12,7 @@ import {
     SelectWaterDescriptionValues
 } from "../../utils/filtersValue";
 import {formatShortPrice} from "../../utils/util";
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 import {Checkbox} from 'antd';
 import SelectBoost from "../Select/Select";
 const rangePrice = PriceForSaleRent();
@@ -45,6 +45,7 @@ class SearchFilter extends React.Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
             priceText: 'Any Price',
             maxPrice: rangePrice[rangePrice.length - 1],
@@ -67,8 +68,7 @@ class SearchFilter extends React.Component {
     }
 
     componentDidMount() {
-        // Promise.all([this.props.getFilterParams(this.props.filter_id)]).then(values => {
-        // });
+        console.log(this.props)
     }
 
     setClickRange = () => {
@@ -129,7 +129,7 @@ class SearchFilter extends React.Component {
             minBeds,
             maxBeds
         })
-        console.log(this.state)
+        this.props.changeItem(this.state, 'beds')
         // setterMinBed(minVal);
         // setterMaxBed(maxVal);
         // changeItem([minVal, maxVal], 'beds');
@@ -158,7 +158,7 @@ class SearchFilter extends React.Component {
             minBaths,
             maxBaths
         })
-        console.log(this.state)
+        this.props.changeItem(this.state, 'baths')
         // setterMinBaths(minVal);
         // setterMaxBaths(maxVal);
         // changeItem([minVal, maxVal], 'baths');
@@ -200,7 +200,7 @@ class SearchFilter extends React.Component {
             propertyCheck,
             propertyText,
         })
-
+        this.props.changeItem(this.state, 'propertyType')
         // changeItem(checkedValues, 'propertyType');
     }
 
@@ -211,7 +211,7 @@ class SearchFilter extends React.Component {
             ...this.state,
             amenities
         })
-        console.log(this.state);
+        this.props.changeItem(this.state, 'ameneties')
     }
 
     // CHANGE SALE_TYPE
@@ -231,6 +231,7 @@ class SearchFilter extends React.Component {
                 ...this.state,
                 saleType
             })
+            this.props.changeItem(this.state, 'saleType')
             // changeItem(rent, 'saleType');
         }
     }
@@ -245,6 +246,7 @@ class SearchFilter extends React.Component {
             minYear,
             maxYear
         })
+        this.props.changeItem(this.state, 'years')
         // changeItem([minVal, maxVal], 'years');
         // setterMinYear(minVal);
         // setterMaxYear(maxVal);
@@ -258,6 +260,7 @@ class SearchFilter extends React.Component {
             ...this.state,
             parkingOptions
         })
+        this.props.changeItem(this.state, 'parkingOptions')
         console.log(this.state);
     }
 
@@ -269,6 +272,7 @@ class SearchFilter extends React.Component {
             ...this.state,
             waterOptions
         })
+        this.props.changeItem(this.state, 'waterOptions')
         console.log(this.state);
     }
 
