@@ -4,6 +4,7 @@ import Listing from './Listing';
 export default ({
                     data, setActive, updating, setShape,
                 }) => {
+    console.log(data)
     if (data) {
         if (data.items.length > 0) {
             // If there are results, show them

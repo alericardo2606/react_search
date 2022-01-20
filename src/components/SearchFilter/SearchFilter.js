@@ -45,7 +45,6 @@ class SearchFilter extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = {
             priceText: 'Any Price',
             maxPrice: rangePrice[rangePrice.length - 1],

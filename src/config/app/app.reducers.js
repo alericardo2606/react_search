@@ -64,7 +64,6 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
     let currentState = getState();
     let search_data = [];
     let params = '';
-    debugger
     await dispatch({
         type: ACTION_TYPE.BOOST_SEARCH_FILTER,
         payload: axios
@@ -90,7 +89,7 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
                 return currentState;
             })
     })
-    await dispatch(setData(search_data))
+    // await dispatch(setData(search_data))
 }
 
 

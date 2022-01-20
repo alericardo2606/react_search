@@ -4,7 +4,7 @@ export default ({ data, setPage }) => {
     if (data) {
         const {
             prev, next, pages, range,
-        } = data.pagination;
+        } = data.pagination || null;
 
         return (
             <div className="pagination">
