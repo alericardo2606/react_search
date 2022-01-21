@@ -1,11 +1,13 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import promise from "redux-promise-middleware";
-import appReducer from "./app/app.reducers";
+import filterReducer from "./app/filter.reducers";
+import searchReducer from "./app/search.reducers";
 
 const initStore = () => {
     const rootReducer = combineReducers({
-        boostData: appReducer
+        filters: filterReducer,
+        data: searchReducer
     })
 
     const store = createStore(

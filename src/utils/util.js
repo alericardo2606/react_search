@@ -153,3 +153,19 @@ export const NumberList = (props, type) => {
     </ul>
   );
 };
+
+export const createUrlParams = (filters) => {
+  let urlParams = '';
+
+  Object.keys(filters).forEach((item) => {
+    if (item !== 'search_data' && item !== 'gmap_coords_zoom' && item !== 'created_at' && item !== 'modified_in' && item !== 'polygon_search' && item !== 'name' && item !== 'token_id' && item !== 'default_view' && item !== 'count' && item !== 'sort_type' && item !== 'page' && item !== 'id_hackbox' && item !== 'amenities') {
+      if (filters[item] !== null) {
+        urlParams += `%26${item}%3D${filters[item]}`;
+      } else {
+        urlParams += `%26${item}%3D${filters[item] !== null ? filters[item] : ''}`;
+      }
+    }
+  });
+
+  return urlParams
+}

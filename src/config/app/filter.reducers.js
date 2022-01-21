@@ -1,0 +1,108 @@
+import ACTION_TYPE, {API_SEARCH_FILTER, API_SEARCH_URL, REQUEST, SUCCESS} from "./app.actions";
+import axios from 'axios';
+import {createUrlParams} from "../../utils/util";
+import {getSearchData, setData} from "./search.reducers";
+
+const initialState = {
+    waiting: true,
+    searching: '',
+    amenities: [],
+    count: '',
+    created_at: '',
+    default_view: '',
+    gmap_coords_zoom: null,
+    id_hackbox: '',
+    is_force_registration: false,
+    map_overlay_hidden: null,
+    max_baths: null,
+    max_beds: null,
+    max_living_size: null,
+    max_lot_size: null,
+    max_rent_price: null,
+    max_sale_price: null,
+    max_year: null,
+    min_baths: null,
+    min_beds: null,
+    min_living_size: null,
+    min_lot_size: null,
+    min_rent_price: null,
+    min_sale_price: null,
+    min_year: null,
+    modified_in: '',
+    name: '',
+    parking_options: null,
+    polygon_search: '',
+    property_type: '',
+    sale_type: '',
+    sort_type: '',
+    token_id: '',
+    tripwire_id: null,
+    waterfront_options: null
+}
+
+const filterReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case REQUEST(ACTION_TYPE.BOOST_SEARCH):
+            return {...state, waiting: true, searching: 'Searching...'}
+
+        case SUCCESS(ACTION_TYPE.BOOST_SEARCH):
+            return action.payload
+
+        case REQUEST(ACTION_TYPE.BOOST_SEARCH_FILTER):
+            return {...state, waiting: true}
+
+        case SUCCESS(ACTION_TYPE.BOOST_SEARCH_FILTER):
+            return action.payload
+
+        case ACTION_TYPE.BOOST_SEARCH_FILTER: {
+            return action.payload
+        }
+
+        default:
+            return state
+    }
+}
+
+export const getFilterParams = (filter_id) => async (dispatch, getState) => {
+    let currentState = getState().filters;
+    let data = getState().data;
+
+    const resSearchFilter = await axios.get(API_SEARCH_FILTER + '/' + filter_id);
+
+    currentState = {...resSearchFilter.data, waiting: false};
+
+    const params = createUrlParams(currentState);
+
+    const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.polygon_search}&event_triggered=yes&device_width=${window.innerWidth}`;
+    const resSearchUrl = await axios.post(API_SEARCH_URL, body);
+
+    setData(resSearchUrl.data);
+
+    currentState.waiting = false;
+
+    dispatch({
+        type: ACTION_TYPE.BOOST_SEARCH_FILTER,
+        payload: currentState,
+    })
+
+}
+
+
+// export const getSearchData = () => async (dispatch, getState) => {
+//     const currentState = getState().appReducer;
+//
+//     const params = createUrlParams(currentState);
+//
+//     const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.shape}&event_triggered=yes&device_width=${window.innerWidth}`;
+//     debugger
+//     await dispatch({
+//         type: ACTION_TYPE.BOOST_SEARCH,
+//         payload: axios
+//             .post(API_SEARCH_URL, body)
+//             .then((response) => {
+//                 console.log(response)
+//             })
+//     })
+// }
+
+export default filterReducer

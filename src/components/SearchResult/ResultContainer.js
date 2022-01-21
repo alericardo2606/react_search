@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import Pagination from './Pagination';
 import ResultsHeader from './ResultsHeader';
 import Results from './Results';
-import {getFilterParams} from "../../config/app/app.reducers";
+import {getFilterParams} from "../../config/app/filter.reducers";
 import {connect} from "react-redux";
 import SearchFilter from "../SearchFilter/SearchFilter";
 
@@ -10,8 +10,6 @@ const ResultContainer = (props) => {
     const {
         data, setActive, sortType, setSortType, setPage, page, updating, setShape
     } = props
-
-    console.log(data)
     return (
         <div id="results-scroll" className="results">
             {data

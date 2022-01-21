@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import React, {useState} from 'react'
-import {getFilterParams, getSearchData} from "../../config/app/app.reducers";
+import {getFilterParams, getSearchData} from "../../config/app/filter.reducers";
 import AutoComplete from "../Autocomplete/Autocomplete";
 import '../../assets/css/filterBar.scss'
 import RangeSlider from "../Slider/RangeSlider";
@@ -68,7 +68,6 @@ class SearchFilter extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
     }
 
     setClickRange = () => {
