@@ -76,13 +76,16 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
     const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.polygon_search}&event_triggered=yes&device_width=${window.innerWidth}`;
     const resSearchUrl = await axios.post(API_SEARCH_URL, body);
 
-    setData(resSearchUrl.data);
-
     currentState.waiting = false;
 
     dispatch({
         type: ACTION_TYPE.BOOST_SEARCH_FILTER,
         payload: currentState,
+    })
+
+    dispatch({
+        type: ACTION_TYPE.SET_BOOST_SEARCH_DATA,
+        payload: resSearchUrl.data,
     })
 
 }

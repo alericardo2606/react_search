@@ -4,7 +4,6 @@ import Listing from './Listing';
 export default ({
                     data, setActive, updating, setShape,
                 }) => {
-    console.log(updating)
     if (data.items.length > 0) {
         // If there are results, show them
         return (
@@ -24,16 +23,20 @@ export default ({
             </div>
         );
     }
-    // return 0 results message
-    return (
-        <div className="mo-no-results-wrapper">
+    if (data.items.length > 0 && data.params !== null) {
+        return (
+            <div className="mo-no-results-wrapper">
         <span className="ib-gnpno">
           No matching results...
         </span>
-            <button onClick={() => setShape('')}>Remove boundaries</button>
-            &#160;to clear your search.
-        </div>
-    );
+                <button onClick={() => setShape('')}>Remove boundaries</button>
+                &#160;to clear your search.
+            </div>
+        );
+    }
+
+    // return 0 results message
+
 
     return null;
 };

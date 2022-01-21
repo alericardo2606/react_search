@@ -14,8 +14,7 @@ const SearchContainer = (props) => {
         fifty,
         getFilterParams
     } = props;
-    console.log(props)
-    // console.log(data)
+
     // STATES MAPS
     const [updating, setUpdating] = useState(filters.waiting);
     const [active, setActive] = useState(undefined);
@@ -80,11 +79,6 @@ const mapStateToProps = (state) => ({
     initial: state.data,
     filters: state.filters,
 });
-//
-// const mapStateToProps = (state) => {
-//     console.log(state);
-//     return state;
-// };
 
 const mapDispatchToProps = {
     getFilterParams: getFilterParamsAction,

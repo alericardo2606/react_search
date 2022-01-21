@@ -693,7 +693,7 @@ class SearchFilter extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return state.boostData
+    return state.filters
 }
 
 const mapDispatchToProps = {getFilterParams}
