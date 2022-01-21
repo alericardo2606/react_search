@@ -10,6 +10,8 @@ const ResultContainer = (props) => {
     const {
         data, setActive, sortType, setSortType, setPage, page, updating, setShape
     } = props
+    console.log(updating)
+    console.log(data)
     return (
         <div id="results-scroll" className="results">
             {data

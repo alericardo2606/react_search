@@ -7,7 +7,7 @@ export default ({
                     updating,
                 }) => (
     <div className="results-header">
-        {updating
+        {data.items.length > 0 && data.params !== null
             ? (
                 <span className="results-quantity">
           Showing
