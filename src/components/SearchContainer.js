@@ -24,9 +24,6 @@ const SearchContainer = (props) => {
     const [sortType, setSortType] = useState(filters.sort_type);
     const [initialData, setInitial] = useState(initial);
 
-
-    // console.log(initial)
-
     useEffect(() => {
         setUpdating(false);
         window.document.getElementById('results-scroll')
@@ -34,7 +31,7 @@ const SearchContainer = (props) => {
                 top: 0,
                 behavior: 'smooth',
             });
-    }, [initialData]);
+    }, []);
 
     useEffect(() => {
         getFilterParams(filterId)

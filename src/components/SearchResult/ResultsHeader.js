@@ -7,7 +7,7 @@ export default ({
                     updating,
                 }) => (
     <div className="results-header">
-        {data && !updating
+        {updating
             ? (
                 <span className="results-quantity">
           Showing

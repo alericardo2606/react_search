@@ -69,7 +69,7 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
 
     const resSearchFilter = await axios.get(API_SEARCH_FILTER + '/' + filter_id);
 
-    currentState = {...resSearchFilter.data, waiting: false};
+    currentState = {waiting: false, ...resSearchFilter.data };
 
     const params = createUrlParams(currentState);
 
