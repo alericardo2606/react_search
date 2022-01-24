@@ -71,7 +71,6 @@ export default function SearchMap({
                                       initial,
                                       initialPolygon,
                                   }) {
-    // console.log(data);
     const [isDrawing, setIsDrawing] = useState(false);
     const [pins, setPins] = useState([]);
     const [drawnShape, setDrawnShape] = useState('');

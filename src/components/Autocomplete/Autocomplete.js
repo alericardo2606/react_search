@@ -20,7 +20,6 @@ export default function AutoComplete({
     }
 
     function onChange(checkedValues) {
-        console.log(checkedValues);
     }
 
     setTimeout(() => {

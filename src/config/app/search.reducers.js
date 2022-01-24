@@ -34,12 +34,14 @@ const searchReducer = (state = initialState, action) => {
     }
 }
 
-export const getSearchData = () => async (dispatch, getState) => {
-    const currentState = getState().filters;
+export const getSearchData = (filtros) => async (dispatch, getState) => {
+    const filters_apply = getState().data.params;
 
-    const params = createUrlParams(currentState);
+    const params = createUrlParams(filtros);
 
-    const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.shape}&event_triggered=yes&device_width=${window.innerWidth}`;
+    debugger
+
+    const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${filters_apply.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${filters_apply.shape}&event_triggered=yes&device_width=${window.innerWidth}`;
 
     const resSearchUrl = await axios.post(API_SEARCH_URL, body);
 

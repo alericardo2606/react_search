@@ -11,10 +11,11 @@ import {
     SelectParkingValues,
     SelectWaterDescriptionValues
 } from "../../utils/filtersValue";
-import {formatShortPrice} from "../../utils/util";
+import {abbreviateNumber, formatShortPrice} from "../../utils/util";
 import 'antd/dist/antd.css';
 import {Checkbox} from 'antd';
 import SelectBoost from "../Select/Select";
+
 const rangePrice = PriceForSaleRent();
 const rangeSliderValues = filterRangeValues();
 
@@ -45,25 +46,25 @@ class SearchFilter extends React.Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
             priceText: 'Any Price',
+            bedsText: 'Any Bed(s)',
+            bathsText: 'Any Baths(s)',
+            propertyText: 'Any Type',
+            searchText: this.props.total ? 'View ' + abbreviateNumber(this.props.total) + ' Listings' : 'Searching...',
             maxPrice: rangePrice[rangePrice.length - 1],
             minPrice: 0,
-            bedsText: 'Any Bed(s)',
-            minBeds: 0,
-            maxBeds: 6,
-            bathsText: 'Any Baths(s)',
-            minBaths: 0,
-            maxBaths: 6,
-            propertyText: 'Any Type',
-            propertyCheck: ['2', '1', 'tw', 'mf', 'valand'],
-            saleType: '0',
-            minYear: 1900,
-            maxYear: new Date().getFullYear(),
-            parkingOptions: '',
-            waterOptions: '',
-            amenities: []
+            minBeds: this.props.filtros.max_beds || 0,
+            maxBeds: this.props.filtros.max_beds || 6,
+            minBaths: this.props.filtros.min_baths || 0,
+            maxBaths: this.props.filtros.max_baths || 6,
+            propertyCheck: this.props.filtros.property_type.split(',') || 0,
+            saleType: this.props.filtros.sale_type || '0',
+            minYear: this.props.filtros.min_year || 1900,
+            maxYear: this.props.filtros.max_year || new Date().getFullYear(),
+            parkingOptions: this.props.filtros.parking_options || '',
+            waterOptions: this.props.filtros.waterfront_options || '',
+            amenities: this.props.filters.amenities || [],
         }
     }
 
@@ -101,7 +102,6 @@ class SearchFilter extends React.Component {
             minPrice,
             maxPrice
         })
-        console.log(this.state)
         this.props.changeItem(this.state, 'price')
     }
 
@@ -260,7 +260,6 @@ class SearchFilter extends React.Component {
             parkingOptions
         })
         this.props.changeItem(this.state, 'parkingOptions')
-        console.log(this.state);
     }
 
     // CHANGE Water OPTIONS
@@ -272,7 +271,6 @@ class SearchFilter extends React.Component {
             waterOptions
         })
         this.props.changeItem(this.state, 'waterOptions')
-        console.log(this.state);
     }
 
     render() {
@@ -665,7 +663,7 @@ class SearchFilter extends React.Component {
                                                 <div
                                                     className="ib-fdmatching"
                                                 >
-                                                    valor del buscador
+                                                    {this.state.searchText}
                                                 </div>
                                             </div>
                                         </div>
@@ -693,7 +691,10 @@ class SearchFilter extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return state.filters
+    return {
+        filtros: state.filters,
+        total: state.data.pagination.count,
+    }
 }
 
 const mapDispatchToProps = {getFilterParams}

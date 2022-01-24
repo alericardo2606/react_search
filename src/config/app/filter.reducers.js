@@ -42,14 +42,9 @@ const initialState = {
 
 const filterReducer = (state = initialState, action) => {
     switch (action.type) {
-        case REQUEST(ACTION_TYPE.BOOST_SEARCH):
-            return {...state, waiting: true, searching: 'Searching...'}
-
-        case SUCCESS(ACTION_TYPE.BOOST_SEARCH):
-            return action.payload
 
         case REQUEST(ACTION_TYPE.BOOST_SEARCH_FILTER):
-            return {...state, waiting: true}
+            return {...state, waiting: true, searching: 'Searching...'}
 
         case SUCCESS(ACTION_TYPE.BOOST_SEARCH_FILTER):
             return action.payload
@@ -69,7 +64,7 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
 
     const resSearchFilter = await axios.get(API_SEARCH_FILTER + '/' + filter_id);
 
-    currentState = {waiting: false, ...resSearchFilter.data };
+    currentState = {waiting: false, searching: '', ...resSearchFilter.data };
 
     const params = createUrlParams(currentState);
 
@@ -89,23 +84,5 @@ export const getFilterParams = (filter_id) => async (dispatch, getState) => {
     })
 
 }
-
-
-// export const getSearchData = () => async (dispatch, getState) => {
-//     const currentState = getState().appReducer;
-//
-//     const params = createUrlParams(currentState);
-//
-//     const body = `access_token=NjVmNWJjYmY2YjgxMjA0MjU0Njg4ODY1NjFjMDJjYzFmMTA2YTViMTMzMjhmMWY1ZGFjZDZmOTE5NWE3ZjZkMg&search_filter_id=${currentState.token_id}&get_off_market_position=0&post_params=${params}%26polygon_search%3D${currentState.shape}&event_triggered=yes&device_width=${window.innerWidth}`;
-//     debugger
-//     await dispatch({
-//         type: ACTION_TYPE.BOOST_SEARCH,
-//         payload: axios
-//             .post(API_SEARCH_URL, body)
-//             .then((response) => {
-//                 console.log(response)
-//             })
-//     })
-// }
 
 export default filterReducer

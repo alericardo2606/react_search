@@ -1,10 +1,11 @@
 import SearchFilter from "./SearchFilter/SearchFilter";
 import SearchMap from "./Map/SearchMap";
 import { useCallback, useEffect, useState } from "react";
-import { getFilterParams as getFilterParamsAction, getSearchData } from "../config/app/filter.reducers";
+import { getFilterParams as getFilterParamsAction} from "../config/app/filter.reducers";
 import { connect } from "react-redux";
 import '../App.css';
 import ResultContainer from "./SearchResult/ResultContainer";
+import {getSearchData as getSearchDataAction} from "../config/app/search.reducers";
 
 const SearchContainer = (props) => {
     const {
@@ -12,7 +13,8 @@ const SearchContainer = (props) => {
         filters,
         filterId,
         fifty,
-        getFilterParams
+        getFilterParams,
+        getSearchData
     } = props;
 
     // STATES MAPS
@@ -37,15 +39,16 @@ const SearchContainer = (props) => {
     }, []);
 
     const handleChangeItem = useCallback((newValue, type) => {
-        // console.log(newValue);
-        // console.log(type);
+        console.log(newValue);
+        console.log(type);
+        getSearchData(newValue);
     });
 
     return (
         <main id="flex-filters-theme">
             {fifty > 0
             && (
-                <SearchFilter filter_id={filterId} search_fifty={fifty} changeItem={handleChangeItem}/>
+                <SearchFilter filter_id={filterId} search_fifty={fifty} changeItem={handleChangeItem} filters={filters}/>
             )
             }
             <div className="App">
@@ -82,6 +85,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getFilterParams: getFilterParamsAction,
+    getSearchData: getSearchDataAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
